@@ -1,6 +1,6 @@
 class Hangman
 
-  DICTIONARY = ["cat", "dog", "bootcamp", "pizza"]
+  DICTIONARY = ["cat", "dog", "bootcamp", "pizza","green","courtain","ground","basement","united","elephant","table","door","window","bed","chair","phone","wallet","marble","bag", "victory","glass","wall","previous"]
 
   @@random_word = ""
 
