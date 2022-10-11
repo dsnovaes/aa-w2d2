@@ -1,7 +1,5 @@
 class Hangman
 
-  # attr_reader :guess_word, :attempted_chars, :remaining_incorrect_guesses
-
   DICTIONARY = ["cat", "dog", "bootcamp", "pizza"]
 
   @@random_word = ""
@@ -41,6 +39,56 @@ class Hangman
 
     def fill_indices(char,arr)
       arr.each { |i| @guess_word[i] = char }
+    end
+
+    def try_guess(char)
+      matching = get_matching_indices(char)
+      fill_indices(char,matching)
+
+      if already_attempted?(char)
+        p "that has already been attempted"
+        false
+      else
+        @attempted_chars << char
+        @remaining_incorrect_guesses -= 1 if matching.empty?
+        return true
+      end
+    end
+
+    def ask_user_for_guess
+      p "Enter a char:"
+      char = gets.chomp.to_s
+      try_guess(char)
+    end
+
+    def win?
+      if @guess_word.join("") == @secret_word
+        p "WIN"
+        true
+      else
+        false
+      end
+    end
+
+    def lose?
+      if @remaining_incorrect_guesses == 0
+        p "LOSE"
+        true
+      else
+        false
+      end
+    end
+
+    def game_over?
+      if win? 
+        p @secret_word
+        true
+      elsif lose?
+        p "The word was " + @secret_word
+        true
+      else
+        false
+      end
     end
 
 end
