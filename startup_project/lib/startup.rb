@@ -51,7 +51,7 @@ class Startup
     def pay_employee(employee)
         title = employee.title
         salary = @salaries[title]
-        if @funding > salary
+        if @funding >= salary
             employee.pay(salary)
             @funding -= salary
         else
@@ -60,7 +60,7 @@ class Startup
     end
 
     def payday
-        @employees.each { |emp| pay_employee(emp) }
+        @employees.each { |emp| self.pay_employee(emp) }
     end
 
     def average_salary
