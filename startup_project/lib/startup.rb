@@ -1,4 +1,4 @@
-require "employee"
+require_relative "employee"
 
 class Startup
     def initialize(name,funding,salaries)
@@ -63,16 +63,29 @@ class Startup
         @employees.each { |emp| pay_employee(emp) }
     end
 
+    def average_salary
+        total_pay_check = 0
+        @employees.each do |emp|
+            total_pay_check += @salaries[emp.title]
+        end
+        team = @employees.count
+        total_pay_check / team
+    end
+
+    def close
+        @employees.clear
+        @funding = 0
+    end
+
+    def acquire(startup)
+        @funding += startup.funding
+        startup.salaries.each do |k,v|
+            if !@salaries.has_key?(k)
+                @salaries[k] = v
+            end
+        end
+        @employees.push(*startup.employees)
+        startup.close
+    end
+
 end
-
-# salaries = {
-#     "CEO"=>4800,
-#     "CTO"=>3800,
-#     "Pilot"=>2500
-# }
-
-# pExpress = Startup.new("Planet Express", 30000, salaries)
-
-# pExpress.hire("diego","Pilot")
-# p pExpress.employees
-# pExpress.pay_employee("diego")
